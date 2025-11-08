@@ -1,0 +1,6 @@
+home_team,visitor_team,segment,campaign_channel,promotion_flag,day_of_week,month,is_rivalry,game_id,fan_id,ticket_price,engagement_score,loyalty_score,tenure_days,avg_spend,lifetime_value,price_sensitivity,campaign_spend,touch_count_7d,touch_count_30d,win_pct_home,win_pct_visitor,attendance_lag_1,attendance_lag_3,capacity,attendance,variant
+Metro Meteors,Coast Captains,Loyal,email,1,Friday,January,0,1,100,68.0,0.88,0.92,1500,145.0,5200.0,0.2,1.2,1.0,1.0,0.55,0.48,15010,14980,18000,15870,treatment
+Metro Meteors,Desert Drakes,Loyal,email,1,Friday,February,0,4,100,80.0,0.88,0.92,1500,145.0,5200.0,0.2,1.1,2.0,2.0,0.62,0.52,17210,16420,18000,17750,treatment
+Metro Meteors,Capital Comets,Value,sms,0,Friday,January,1,2,101,72.0,0.73,0.65,600,95.0,2100.0,0.55,0.9,1.0,1.0,0.57,0.61,15870,15010,18000,16420,control
+Metro Meteors,Desert Drakes,Value,social,1,Friday,February,0,4,101,80.0,0.73,0.65,600,95.0,2100.0,0.55,1.3,2.0,2.0,0.62,0.52,17210,16420,18000,17750,control
+Metro Meteors,Harbor Hawks,New,social,1,Friday,January,0,3,102,75.0,0.51,0.4,120,60.0,500.0,0.7,1.5,1.0,1.0,0.6,0.5,16420,15870,18000,17210,treatment
