@@ -11,6 +11,7 @@ import pandas as pd
 from nba_api.stats.endpoints import leaguegamelog
 
 DEFAULT_SLEEP = 1.2  # seconds between API calls to avoid rate limiting
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 def season_strings(start: int, end: int) -> List[str]:
@@ -50,7 +51,7 @@ def main() -> None:
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("data/raw/nba_games.csv"),
+        default=PROJECT_ROOT / "data" / "raw" / "nba_games.csv",
         help="Where to save the compiled CSV.",
     )
     args = parser.parse_args()

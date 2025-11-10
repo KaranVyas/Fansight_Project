@@ -14,3 +14,5 @@ nba_api==1.4.1
 lxml==6.0.2
 cloudscraper==1.2.71
 xlrd==2.0.1
+nbformat==5.10.4
+shap>=0.44

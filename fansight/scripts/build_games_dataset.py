@@ -7,10 +7,11 @@ from typing import Dict
 
 import pandas as pd
 
-RAW_GAMES = Path("data/raw/nba_games.csv")
-RAW_ATTENDANCE = Path("data/raw/nba_attendance.csv")
-RAW_CAPACITY = Path("data/raw/arena_capacity.csv")
-OUTPUT = Path("data/processed/games.csv")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+RAW_GAMES = PROJECT_ROOT / "data" / "raw" / "nba_games.csv"
+RAW_ATTENDANCE = PROJECT_ROOT / "data" / "raw" / "nba_attendance.csv"
+RAW_CAPACITY = PROJECT_ROOT / "data" / "raw" / "arena_capacity.csv"
+OUTPUT = PROJECT_ROOT / "data" / "processed" / "games.csv"
 
 # Quick placeholder average ticket prices (USD) per home team.
 # Replace with real pricing data when available.

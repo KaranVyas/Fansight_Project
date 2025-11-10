@@ -5,21 +5,25 @@ FanSight turns ticketing, engagement, and marketing data into actionable models 
 ## Project Structure
 
 ```
-.
+fansight_project/
 ├── README.md
 ├── requirements.txt
 ├── data/
-│   ├── raw/                # drop original exports (kept out of git)
-│   └── processed/          # feature-ready CSVs created by the ETL step
+│   ├── raw/
+│   │   ├── nba_games.csv           # Scraped from nba_api
+│   │   ├── nba_attendance.csv      # Scraped/downloaded from Basketball-Reference
+│   │   └── arena_capacity.csv      # Team → arena → capacity lookup
+│   └── processed/
+│       └── games.csv               # Unified fan-game dataset (built via script below)
 └── fansight/
-    ├── config.py           # global paths + feature/model defaults
-    ├── data/               # schemas, loaders, ETL helpers
-    ├── features/           # feature engineering + segmentation
-    ├── marketing/          # A/B testing utilities
-    ├── models/             # forecasting interfaces
-    ├── reporting/          # Plotly dashboards
-    ├── scripts/            # runnable helpers (sample data + pipeline)
-    └── pipeline.py         # high-level orchestration
+    ├── config.py                   # global paths + feature/model defaults
+    ├── data/                       # schemas, loaders, ETL helpers
+    ├── features/                   # feature engineering + segmentation
+    ├── marketing/                  # A/B testing utilities
+    ├── models/                     # forecasting interfaces
+    ├── reporting/                  # Plotly dashboards
+    ├── scripts/                    # data collectors + pipeline runner
+    └── pipeline.py                 # high-level orchestration
 ```
 
 ## Quickstart
@@ -31,27 +35,33 @@ FanSight turns ticketing, engagement, and marketing data into actionable models 
    pip install -r requirements.txt
    ```
 
-2. **Generate synthetic data (optional, for familiarisation)**
+2. **(Optional) Generate synthetic data**
    ```bash
    python -m fansight.scripts.generate_sample_data
    ```
    This writes small CSVs to `data/processed/` so you can exercise the pipeline without proprietary inputs.
 
-3. **Run the full pipeline**
+3. **Build the real games dataset**
+   ```bash
+   python -m fansight.scripts.fetch_nba_games --start 2018 --end 2025
+   python -m fansight.scripts.fetch_bref_attendance --start 2019 --end 2025   # or drop your manual files into data/raw/
+   python -m fansight.scripts.build_games_dataset
+   ```
+   The last command merges the NBA stats log, attendance tables, win percentages, arena capacities, and placeholder ticket prices into `data/processed/games.csv`.
+
+4. **Run the full pipeline**
    ```bash
    python -m fansight.scripts.run_pipeline
    ```
    You will see ETL stats, model metrics, segmentation quality, A/B results, and the count of dashboard figures created. The trained model artifact is stored under `fansight_artifacts/` (ignored by git).
 
-4. **Swap in real club data**
-   - Place raw exports under `data/raw/`.
-   - Build processed tables that satisfy `fansight/data/schemas.py` (or extend the schemas as needed).
-   - Update/extend `fansight/data/etl.py` if your columns differ.
-   - Re-run `python -m fansight.scripts.run_pipeline`.
+5. **Swap in real club data**
+   - Replace `data/raw/nba_games.csv` and `nba_attendance.csv` with your ticketing feed, attendance logs, and pricing exports.
+   - Drop actual CRM/marketing tables into `data/processed/` (or extend the ETL to build them).
+   - Update `fansight/data/schemas.py` and `fansight/config.FeatureConfig` as needed.
+   - Re-run `python -m fansight.scripts.build_games_dataset` and `python -m fansight.scripts.run_pipeline`.
 
 ## Data You Can Use
-
-You mentioned not having data yet, so here are practical sources to bootstrap FanSight:
 
 | Need | Where to Get It | Notes |
 | --- | --- | --- |
@@ -75,5 +85,3 @@ You mentioned not having data yet, so here are practical sources to bootstrap Fa
 - `data/raw/` and `data/processed/` are empty by default and ignored by git (only `.gitkeep` files remain so the folders exist).
 - `fansight_artifacts/` is ignored automatically—feel free to delete it if you want to start fresh.
 - When sharing the project, re-run `python -m fansight.scripts.generate_sample_data` to regenerate the toy datasets instead of committing them.
-
-Happy building! The repo is now a clean slate for FanSight-specific experimentation, so you can focus on understanding (and improving) the new implementation without NBA legacy baggage.

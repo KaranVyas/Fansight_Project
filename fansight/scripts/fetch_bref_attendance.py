@@ -11,6 +11,7 @@ import pandas as pd
 import requests
 import time
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 BASE_URL = "https://www.basketball-reference.com/leagues/NBA_{season}_games-{month}.html"
 MONTHS = ["october", "november", "december", "january", "february", "march", "april", "may", "june"]
 
@@ -79,7 +80,7 @@ def main() -> None:
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("data/raw/nba_attendance.csv"),
+        default=PROJECT_ROOT / "data" / "raw" / "nba_attendance.csv",
         help="Where to save the compiled CSV.",
     )
     args = parser.parse_args()
